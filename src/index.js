@@ -1,17 +1,38 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import App from './components/App';
+import { Provider } from 'react-redux';
+import store from './store';
+import { BrowserRouter as Router } from 'react-router-dom';
+import configuration from './components/configuration';
+import ComponentOverride from './components/ComponentOverride';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+import { Oidc, InMemoryWebStorage } from '@axa-fr/react-oidc-redux';
+
+const isEnabled = configuration.isEnabled;
+if (configuration.configurations.length <= 0) {
+  throw new Error(`No configuration found`);
+}
+// TODO: Figure out CORS error with CSH, and add multiple login buttons, etc. Probably the login button will set state then redirect to index and based on that state we pick authenticationConfig.
+const authenticationConfig = configuration.configurations[0];
+
+console.log(authenticationConfig)
+
+const Start = (
+  <Provider store={store}>
+    <Router>
+      <Oidc
+        store={store}
+        configuration={authenticationConfig.config}
+        isEnabled={isEnabled}
+        callbackComponentOverride={ComponentOverride}
+        UserStore={InMemoryWebStorage}
+      >
+        <App />
+      </Oidc>
+    </Router>
+  </Provider>
 );
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+ReactDOM.render(Start, document.getElementById('root'));
