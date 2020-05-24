@@ -5,7 +5,7 @@ import App from './components/App';
 import { Provider } from 'react-redux';
 import store from './store';
 import { BrowserRouter as Router } from 'react-router-dom';
-import configuration from './components/configuration';
+import configuration from './configuration';
 import ComponentOverride from './components/ComponentOverride';
 
 import { Oidc, InMemoryWebStorage } from '@axa-fr/react-oidc-redux';
