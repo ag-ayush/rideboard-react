@@ -1,9 +1,9 @@
-import * as React from 'react';
+import React from "react";
 
 const ComponentOverride = () => {
   return (
     <div>
-      <h1>This is a Custom Callback component</h1>
+      <h1>This is a Custom Callback component.</h1>
     </div>
   );
 };

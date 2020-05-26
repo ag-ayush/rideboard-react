@@ -7,7 +7,7 @@ const mapStateToProps = (state, props) => {
   const isAuthenticated = user !== null && !user.expired;
   return {
     isVisible: isAuthenticated,
-    id_token: user && user.id_token ? user.id_token : ''
+    id_token: user && user.id_token ? user.id_token : ''  
   };
 };
 
